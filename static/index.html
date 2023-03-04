@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="../dist/wasm_exec.js"></script>
+    <script>
+      const go = new Go();
+      WebAssembly.instantiateStreaming(
+        fetch("../dist/excel.wasm"),
+        go.importObject
+      ).then((result) => {
+        go.run(result.instance);
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <label for="inputField">Enter value</label>
+      <input id="inputField" name="Hash" type="text" />
+      <div id="outputHash" style="font-size: 20px"></div>
+      <button id="btExec">Execute</button>
+    </div>
+    <script>
+      var inputField = document.querySelector("#inputField");
+      var outputHash = document.querySelector("#outputHash");
+
+      let btExec = document.getElementById("btExec");
+      btExec.addEventListener("click", function () {
+        outputHash.innerHTML = excelExecute(inputField.value);
+      });
+    </script>
+  </body>
+</html>
