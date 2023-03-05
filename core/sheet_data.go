@@ -23,10 +23,7 @@ type SheetData struct {
 }
 
 func (s *SheetData) ToJSON() (string, error) {
-	bytes, err := json.Marshal(s)
-	if err != nil {
-		return "", err
-	}
+	bytes, _ := json.Marshal(s)
 	return string(bytes), nil
 }
 
@@ -40,7 +37,7 @@ func NewSheetData(rawString string) (*SheetData, error) {
 }
 
 func (s *SheetData) Get(row, col string) (*SheetCell, error) {
-	if s.Data == nil {
+	if len(s.Data) == 0 {
 		return nil, errors.New("sheet data is empty")
 	}
 	rowData, ok := s.Data[row]
